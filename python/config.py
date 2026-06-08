@@ -1,0 +1,1 @@
+ESP32_IP = "http://X.X.X.X" # Replace with the IP address of your ESP32

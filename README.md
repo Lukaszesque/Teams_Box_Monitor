@@ -1,3 +1,13 @@
+My WFH office is also my partner's craft room, and she sometimes struggles to tell if I'm in a call or not. To help her, I've created a little box with four LEDs that indicates whether I'm in a meeting, and if my camera and mic is on or not,
+
+How does it work?
+Microsoft Teams has an API for third party devices which needs to be enabled in its settings. On doing this, it exposes its state in a websocket on port :8124. 
+
+I'm running a python client that observes this websocket, and on each update, it sends out a request to an ESP32 server, which contains the current state of my Teams. The ESP32 server receives this, and lights up LEDs according to what's passed by the client.
+
+In addition, the client constantly probes the ESP32 - in a 'heartbeat' - which I use to tell whether the device is on. If the heartbeat is not recieved, the device is not on, and my partner knows not to trust the switched off LEDs!
+
+
 REPOSITORY STRUCTURE:
 
 PYTHON/ARDUINO:

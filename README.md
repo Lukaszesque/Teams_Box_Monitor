@@ -1,6 +1,6 @@
 # Microsoft Teams Monitor Box
 
-My WFH office is also my partner's craft room, and she sometimes struggles to tell if I'm in a call or not. To help her, I've created a little box with four LEDs that indicates whether I'm in a meeting, and if my camera and mic are on or not,
+My WFH office is also my partner's craft room, and she sometimes struggles to tell if I'm in a call or not. To help her, I've created a little box with four LEDs that indicates whether I'm in a meeting, and if my camera and mic are on or not.
 
 ![Teams Box Photo](./images/TeamsBoxPhoto.png)
 
@@ -9,7 +9,7 @@ Microsoft Teams has an API for third party devices which needs to be enabled in 
 
 I'm running a python client that observes this websocket, and on each update it sends out a request to an ESP32 server, which transmits the current state of my Teams. The ESP32 server receives this and lights up LEDs according to what's passed by the client.
 
-In addition, the client constantly probes the ESP32 - in a 'heartbeat' - which I use to tell whether the device is on. If the heartbeat is not recieved, the device is not on, and my partner knows not to trust the switched off LEDs!
+In addition, the client constantly probes the ESP32 - in a 'heartbeat' - which I use to tell whether the device is on. If the heartbeat is not received, the device is not on, and my partner knows not to trust the switched off LEDs!
 
 
 ## Repository Structure:
@@ -28,11 +28,11 @@ The repo is split between two services communicating with each other. Each folde
     Responsible for sending out a request to the ESP32 which contains the state of teams taken from the websocket. Gets called from teams_client.py
 
     Python -> heartbeat.py
-    Responsible for health checking the device. It probes the server for a response, and times out if the response isn't recieved, indicating that the device might not be working properly. If hearbeat is working correctly, the 'Device on' LED is lit up.
+    Responsible for health checking the device. It probes the server for a response, and times out if the response isn't received, indicating that the device might not be working properly. If heartbeat is working correctly, the 'Device on' LED is lit up.
 
 ### Arduino:
     teams_box_server.ino:
-    Contains a simple server which recieves input from the python client and uses it to control the LED's depending on their state.
+    Contains a simple server which receives input from the python client and uses it to control the LED's depending on their state.
 
 ## Hardware
 
@@ -68,7 +68,7 @@ The repo is split between two services communicating with each other. Each folde
     arduino/teams_box_server/teams_box_server.ino: Needs to be updated with the SSID and Password credentials of your local WiFi.
 4) Wire the electronics as per the Wiring Diagram above
 5) For python, install the required packages in requirements.txt. I suggest using a [virtual environment](https://docs.python.org/3/library/venv.html)
-6) Deploy the Arduino code, and then run the 'main.py' file (python run main.py). I powered the Arduino with the micro USB port that it came with. I found it quite flimsy, so have reinforced it with blue tac.
+6) Deploy the Arduino code, and then run the 'main.py' file (python main.py). I powered the Arduino with the micro USB port that it came with. I found it quite flimsy, so have reinforced it with blue tac.
 7) Enter a teams call. You will be prompted with a window to accept or decline a 3rd party application. On clicking 'Accept', the blue LED of 'in call' should light up. Have fun!
 
 ## Acknowledgements
@@ -77,8 +77,4 @@ Shout out to [svrooij](https://github.com/svrooij) and their [teams-monitor](htt
 
 ## License 
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This project is licensed under the MIT License - see [License](./license.txt) for details.

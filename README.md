@@ -1,6 +1,6 @@
 # Microsoft Teams Monitor Box
 
-My WFH office is also my partner's craft room, and she sometimes struggles to tell if I'm in a call or not. To help her, I've created a little box with four LEDs that indicates whether I'm in a meeting, and if my camera and mic is on or not,
+My WFH office is also my partner's craft room, and she sometimes struggles to tell if I'm in a call or not. To help her, I've created a little box with four LEDs that indicates whether I'm in a meeting, and if my camera and mic are on or not,
 
 ![Teams Box Photo](./images/TeamsBoxPhoto.png)
 
@@ -14,14 +14,14 @@ In addition, the client constantly probes the ESP32 - in a 'heartbeat' - which I
 
 ## Repository Structure:
 
-#### PYTHON/ARDUINO:
-The repo is split between two services communicating with each other. Each folder contains it's respective code.
+### PYTHON/ARDUINO:
+The repo is split between two services communicating with each other. Each folder contains its respective code.
 
     Python -> config.py:
     A place to put any config on the client side, for example the IP address of the ESP32
 
     Python -> teams_client.py
-    Responsible for initiating the Teams Websocket, and instructions on what needs to happen when Teams publishes a change to it's state
+    Responsible for initiating the Teams Websocket, and instructions on what needs to happen when Teams publishes a change to its state
 
     Python -> 
     esp32_client.py:
@@ -30,34 +30,55 @@ The repo is split between two services communicating with each other. Each folde
     Python -> heartbeat.py
     Responsible for health checking the device. It probes the server for a response, and times out if the response isn't recieved, indicating that the device might not be working properly. If hearbeat is working correctly, the 'Device on' LED is lit up.
 
-#### Arduino:
+### Arduino:
     teams_box_server.ino:
     Contains a simple server which recieves input from the python client and uses it to control the LED's depending on their state.
 
 ## Hardware
 
-#### Components
+### Components
 - ESP32 WROOM-32 Chip
 - 4 x LEDs (Blue, Yellow, Green, and Red)
-- 4 x 220 Ohm Resitors
+- 4 x 220 Ohm Resistors
 - 5 x 7cm Perfboard
 - Micro USB cable (power only)
-- Soldering iron & Solder (Although initially I used a breadboad for the prototype)
+- Soldering iron & Solder (Although initially I used a breadboard for the prototype)
 - Blue tac to hold the power cable in place
 
-#### Wiring Diagram
+### Wiring Diagram
 *Created with [Circuit Canvas](https://circuitcanvas.com):*
 
 ![Wiring diagram](./images/TeamsBoxWiringDiagram.png)
 
-#### Setup
+### Pin Mapping Table
+
+| LED               | GPIO Pin |
+|-------------------|----------|
+| Mic Active        | 18       |
+| Camera Active     | 19       |
+| Online            | 21       |
+| In call           | 22       |
+
+## Setup
 
 1) First you need to enable [Teams 3rd Party API](https://support.microsoft.com/en-us/teams/calls-devices/connect-to-third-party-devices-in-microsoft-teams). At the time of writing it's Settings > Privacy > Manage API > Enable API
 2) You will need to find out the IP of your ESP32. You can use the Serial Monitor for this, like in [this post](https://community.platformio.org/t/how-do-i-find-the-ip-address-for-esp32/14516) - consult an AI if you are struggling.
-3) Update the following files:
+3) Update the following files (Be careful not to commit these!):
     python/config.py: Needs to have the IP address of the ESP32 (from step 2)
     arduino/teams_box_server/teams_box_server.ino: Needs to be updated with the SSID and Password credentials of your local WiFi.
 4) Wire the electronics as per the Wiring Diagram above
 5) For python, install the required packages in requirements.txt. I suggest using a [virtual environment](https://docs.python.org/3/library/venv.html)
 6) Deploy the Arduino code, and then run the 'main.py' file (python run main.py). I powered the Arduino with the micro USB port that it came with. I found it quite flimsy, so have reinforced it with blue tac.
 7) Enter a teams call. You will be prompted with a window to accept or decline a 3rd party application. On clicking 'Accept', the blue LED of 'in call' should light up. Have fun!
+
+## Acknowledgements
+
+Shout out to @svoorij and their [teams-monitor](https://github.com/svrooij/teams-monitor) repo, which was a huge help in figuring out the Teams WebSocket pairing flow.
+
+## License 
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

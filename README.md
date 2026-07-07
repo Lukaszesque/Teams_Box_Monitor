@@ -73,7 +73,7 @@ The repo is split between two services communicating with each other. Each folde
 
 ## Acknowledgements
 
-Shout out to @svoorij and their [teams-monitor](https://github.com/svrooij/teams-monitor) repo, which was a huge help in figuring out the Teams WebSocket pairing flow.
+Shout out to [svrooij](https://github.com/svrooij) and their [teams-monitor](https://github.com/svrooij/teams-monitor) repo, which was a huge help in figuring out the Teams WebSocket pairing flow.
 
 ## License 
 

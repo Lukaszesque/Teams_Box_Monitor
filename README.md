@@ -64,8 +64,10 @@ The repo is split between two services communicating with each other. Each folde
 1) First you need to enable [Teams 3rd Party API](https://support.microsoft.com/en-us/teams/calls-devices/connect-to-third-party-devices-in-microsoft-teams). At the time of writing it's Settings > Privacy > Manage API > Enable API
 2) You will need to find out the IP of your ESP32. You can use the Serial Monitor for this, like in [this post](https://community.platformio.org/t/how-do-i-find-the-ip-address-for-esp32/14516) - consult an AI if you are struggling.
 3) Update the following files (Be careful not to commit these!):
-    python/config.py: Needs to have the IP address of the ESP32 (from step 2)
-    arduino/teams_box_server/teams_box_server.ino: Needs to be updated with the SSID and Password credentials of your local WiFi.
+
+    **python/config.py:** Needs to have the IP address of the ESP32 (from step 2)
+    
+    **arduino/teams_box_server/teams_box_server.ino:** Needs to be updated with the SSID and Password credentials of your local WiFi.
 4) Wire the electronics as per the Wiring Diagram above
 5) For python, install the required packages in requirements.txt. I suggest using a [virtual environment](https://docs.python.org/3/library/venv.html)
 6) Deploy the Arduino code, and then run the 'main.py' file (python main.py). I powered the Arduino with the micro USB port that it came with. I found it quite flimsy, so have reinforced it with blue tac.
